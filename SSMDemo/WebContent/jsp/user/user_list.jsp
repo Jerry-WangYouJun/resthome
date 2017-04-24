@@ -26,7 +26,7 @@
             if (pageNo != undefined) {
                 $("#pageNo").val(pageNo);
             }
-            $("#userListForm").submit();
+            $("#customerListForm").submit();
         }
 
 
@@ -173,7 +173,7 @@
 <!-- 中间开始 -->
 
 <div class="main">
-    <form action="${basePath}/UserServlet" method="POST" id="userListForm">
+    <form action="${basePath}/UserServlet" method="POST" id="customerListForm">
         <input type="hidden" id="hidEditMotion"  />
         <div class="main-right">
             <div class="content">
@@ -189,12 +189,16 @@
                             <thead>
                             <tr align="center">
                                 <td width="30px"></td>
-                                <td width="150">用户编号</td>
-                                <td width="150">部门</td>
-                                <td width="150">人员</td>
-                                <td width="150">职位</td>
-                                <td width="150">状态</td>
-                                <td width="135">备注</td>
+                                <td width="150">老人姓名</td>
+                                <td width="150">床号</td>
+                                <td width="150">性别</td>
+                                <td width="150">年龄</td>
+                                <td width="150">身份证号</td>
+                                <td width="135">照顾级别</td>
+                                <td width="135">亲属</td>
+                                <td width="135">亲属关系</td>
+                                <td width="135">亲属联系电话</td>
+                                <td width="135">亲属地址</td>
                             </tr>
                             </thead>
                         </table>
@@ -202,37 +206,24 @@
                     <div class="main-list-cont">
                         <table width="915px" cellspacing="0" cellpadding="0">
                             <tbody>
-								<c:forEach items="${ userList}" var = "user">
+								<c:forEach items="${ customerList}" var = "customer">
 									<tr>
-									 <c:set var="userId" value = "${user.id }" />
+									 <c:set var="customerId" value = "${customer.id }" />
 											<td width='30px'>
-												<input type='checkbox' id='chkUser${userId}' name='chkUserId' value='${user.id}' onclick='singleSelect(this);' />
+												<input type='checkbox' id='chkcustomer${customerId}' name='chkcustomerId' value='${customer.id}' onclick='singleSelect(this);' />
 											</td>
 											<td width='150px'>
-												${user.username}
+												${customer.cname}
 											</td>
-											<td width='150px'>${user.age}</td>
-											<td width='150px'>${user.username}</td>
-											<td width='150px'>
-												<c:if test="${empty user.age}">
-													 无职位
-												</c:if>
-												<c:if test="${!empty user.username}">
-													${user.username}
-												</c:if>
-											</td>
-											<td width='150px'>
-												<c:choose>
-													<c:when test="${user.age eq 0  }">
-														在职
-													</c:when>
-													<c:otherwise>
-														离职
-													</c:otherwise>
-												</c:choose>
-											
-											</td>
-											<td width='150px'>${user.age}</td>
+											<td width='150px'>${customer.bedId}</td>
+											<td width='150px'>${customer.sex}</td>
+											<td width='150px'>${customer.birthday}</td>
+											<td width='150px'>${customer.idcard}</td>
+											<td width='150px'>${customer.level}</td>
+											<td width='150px'>${customer.rname}</td>
+											<td width='150px'>${customer.relation}</td>
+											<td width='150px'>${customer.rphone}</td>
+											<td width='150px'>${customer.raddress}</td>
 									</tr>
 								</c:forEach>
                             </tbody>

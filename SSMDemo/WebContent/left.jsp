@@ -24,10 +24,10 @@
             <p></p><span>主页</span>
         </li>
         <li data-label="Publ" id="order">
-            <p></p><span><a href="${basePath}/user/findAllUser" target="mainFrame">用户</a></span>
+            <p></p><span><a href="${basePath}/customer/findAllCustomer" target="mainFrame">用户</a></span>
         </li>
         <li data-label="Publ" id="prodPlan">
-            <p></p><span><a href="${basePath}/ProdPlanServlet" target="mainFrame">车间计划</a></span>
+            <p></p><span><a href="${basePath}/ProdPlanServlet" target="mainFrame"></a></span>
         </li>
         <li data-label="Publ" id="prodTrack">
             <p></p><span><a href="${basePath}/ProdTrackServlet" target="mainFrame">进度跟踪</a></span>
