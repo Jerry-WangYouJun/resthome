@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CustomerMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="Customer"  id="resultMap">
+        <id property="id" column="id"/>
+        <result property="bedId" column="bedid"/>
+        <result property="cname" column="cname"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="level" column="level"/>
+        <result property="idcard" column="idcard"/>
+        <result property="address" column="address"/>
+        <result property="nurse" column="nurse"/>
+        <result property="indate" column="indate"/>
+        <result property="outdate" column="outdate"/>
+        <result property="relation" column="relation"/>
+        <result property="rphone" column="r_phone"/>
+        <result property="rname" column="r_name"/>
+        <result property="raddress" column="r_address"/>
+    </resultMap>
+    
+    <select id="findAllCustomer" resultMap="resultMap" resultType="Customer">
+        select * from t_customer
+    </select>
+</mapper>
