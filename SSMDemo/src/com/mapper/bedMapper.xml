@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.BedMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="Bed"  id="bedResultMap">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="room" column="room"/>
+        <result property="area" column="area"/>
+         <result property="description" column="description"/>
+    </resultMap>
+    
+    <select id="findAllBed" resultMap="bedResultMap" resultType="Bed">
+        select * from t_bed
+    </select>
+    
+    
+    <select id="queryBedsByWhere" resultMap="bedResultMap" resultType="Bed" parameterType="Bed">
+        select * from t_bed <include refid="where" />
+    </select>
+    
+    <sql id="where">
+    <where >
+     	  1=1 
+         <if test="id != null  and id !=''"> 
+    	      and id = #{id} 
+    	  </if>
+    	  <if test="code != null  and code !=''"> 
+    	      and code like '%${code}%' 
+    	  </if>
+    	  <if test="room != null  and room !=''"> 
+    	      and room like '%${room}%'
+    	  </if>
+    	  <if test="area != null  and area !=''"> 
+    	      and area like '%${area}%'
+    	  </if>
+    </where>
+    </sql>
+    
+    <insert id="insertBed" parameterType="Bed">
+    	  insert into t_bed ( 
+    	  <if test="room != null  and room !=''"> 
+    	  room , 
+    	  </if>
+    	  <if test="area != null  and area !=''"> 
+    	  area , 
+    	  </if>
+    	  code 
+    	  ) values(
+    	 <if test="room != null  and room !=''"> 
+    	    #{room} , 
+    	  </if>
+    	  <if test="area != null  and area !=''"> 
+    	    #{area} , 
+    	  </if>
+    	  #{code}
+    	  )
+    </insert>
+    <update id="updateBed" parameterType="Bed">
+    	 update t_bed set code = #{code} , room = #{room} , area = #{area} , 
+    	 description= #{description} where id = #{id}
+    </update>
+    
+    <delete id="deleteBed" parameterType="Bed">
+         delete from t_bed where id=#{id}
+    </delete>
+</mapper>
