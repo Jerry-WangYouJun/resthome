@@ -27,13 +27,13 @@
             <p></p><span><a href="${basePath}/customer/findAllCustomer" target="mainFrame">用户</a></span>
         </li>
         <li data-label="Publ" id="prodPlan">
-            <p></p><span><a href="${basePath}/ProdPlanServlet" target="mainFrame"></a></span>
+            <p></p><span><a href="${basePath}/bed/query" target="mainFrame">床位管理</a></span>
         </li>
         <li data-label="Publ" id="prodTrack">
-            <p></p><span><a href="${basePath}/ProdTrackServlet" target="mainFrame">进度跟踪</a></span>
+            <p></p><span><a href="${basePath}/room/query" target="mainFrame">房间管理</a></span>
         </li>
         <li data-label="Publ" id="prodBoard">
-            <p></p><span><a href="${basePath}/ProdBoardServlet" target="mainFrame">生产看板</a></span>
+            <p></p><span><a href="${basePath}/move/query" target="mainFrame">转房记录</a></span>
         </li>
         <li data-label="Publ">
             <p></p><span>基础信息</span>
