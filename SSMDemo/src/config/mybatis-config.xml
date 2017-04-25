@@ -5,9 +5,11 @@
     <typeAliases>
         <typeAlias alias="User" type="com.model.User"/>
         <typeAlias alias="Customer" type="com.model.Customer"/>
+        <typeAlias alias="Bed" type="com.model.Bed"/>
     </typeAliases>
     <mappers>
         <mapper resource="com/mapper/userMapper.xml" />
         <mapper resource="com/mapper/customerMapper.xml" />
+         <mapper resource="com/mapper/bedMapper.xml" />
     </mappers>
 </configuration>
