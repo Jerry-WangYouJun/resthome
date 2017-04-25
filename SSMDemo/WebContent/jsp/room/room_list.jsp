@@ -22,27 +22,27 @@
         });
 
         function query() {
-            $("#bedListForm").submit();
+            $("#roomListForm").submit();
         }
 
 
         function editInit(motion) {
             if (motion == "add") {
                 $("#myModalLabel").html("新增");
-                $("#iframeDialog").attr("src", "${basePath}/bed/addInit");
+                $("#iframeDialog").attr("src", "${basePath}/room/addInit");
             } else if (motion == "edit") {
                 $("#myModalLabel").html("修改人员");
-               // var selectedChks = $(".main-list-cont").find('input[type="checkbox"][id^="chkbedId"]:checked');
+               // var selectedChks = $(".main-list-cont").find('input[type="checkbox"][id^="chkroomId"]:checked');
 	             var id = getChecked();
 	             if(id > 0){
-	                $("#iframeDialog").attr("src", "${basePath}/bed/updateInit?id=" + id);
+	                $("#iframeDialog").attr("src", "${basePath}/room/updateInit?id=" + id);
 	             }else{
 	            	 return false;
 	             }
             }else if(motion == "delete"){
             	var id = getChecked();
 	             if(id > 0){
-	            	 window.location.href= "${basePath}/bed/delete?id=" + id;
+	            	 window.location.href= "${basePath}/room/delete?id=" + id;
 	             }else{
 	            	 return false;
 	             }
@@ -57,10 +57,10 @@
 
         function doSubmit(motion) {
             if (motion.length > 0) {
-                path = "${basePath }/bed/edit";
-                var bedForm = window.frames["iframeDialog"].document.getElementById("bedForm");
-                bedForm.action = path;
-                bedForm.submit();
+                path = "${basePath }/room/edit";
+                var roomForm = window.frames["iframeDialog"].document.getElementById("roomForm");
+                roomForm.action = path;
+                roomForm.submit();
             }
         }
         
@@ -88,8 +88,8 @@
         }
         
         function clearData(){
-        	$("#code").val("");
-        	$("#room").val("");
+        	$("#roomcode").val("");
+        	$("#bednum").val("");
         	$("#area").val("");
         }
     </script>
@@ -98,12 +98,13 @@
 <!-- 中间开始 -->
 
 <div class="main">
-    <form action="${basePath}/bed/query" method="POST" id="bedListForm">
+    <form action="${basePath}/room/query" method="POST" id="roomListForm">
+        <input type="hidden" id="hidEditMotion"  />
         <div class="main-right">
             <div class="content">
             	<p class="content-top">
-						<span>床位</span><input type="text" id = "code"  name="code" value= "${query.code}"/>
-						<span>房间</span><input type="text" id = "room"  name="room" value= "${query.room}"/>
+						<span>房间编号</span><input type="text" id = "roomcode"  name="roomcode" value= "${query.roomcode}"/>
+						<span>床位数</span><input type="text" id = "bednum"  name="bednum" value= "${query.bednum}"/>
 						<span>院区</span><input type="text" id = "area"  name="area" value= "${query.area}"/>
 						   <input class="bta" type="button" value="查询" onclick="query()"/>
 						   <input class="btd" type="button" value="清除" onclick="clearData()"/>
@@ -120,9 +121,9 @@
                             <thead>
                             <tr align="center">
                                 <td width="5%"></td>
-                                <td width="25%">床位</td>
-                                <td width="20%">房间号</td>
-                                <td width="20%">楼区</td>
+                                <td width="25%">房间编号</td>
+                                <td width="20%">床位数</td>
+                                <td width="20%">院区</td>
                                 <td width="30%">备注</td>
                             </tr>
                             </thead>
@@ -131,18 +132,18 @@
                     <div class="main-list-cont">
                         <table width="915px" cellspacing="0" cellpadding="0">
                             <tbody>
-								<c:forEach items="${ bedList}" var = "bed">
+								<c:forEach items="${ roomList}" var = "room">
 									<tr>
-									 <c:set var="bedId" value = "${bed.id }" />
+									 <c:set var="roomId" value = "${room.id }" />
 											<td width='5%'>
-												<input type='checkbox' id='chkbed${bedId}' name='chkbedId' value='${bed.id}'  />
+												<input type='checkbox' id='chkroom${roomId}' name='chkroomId' value='${room.id}'  />
 											</td>
 											<td width='25%'>
-												${bed.code}
+												${room.roomcode}
 											</td>
-											<td width='20%'>${bed.room}</td>
-											<td width='20%'>${bed.area}</td>
-											<td width='30%'>${bed.description}</td>
+											<td width='20%'>${room.bednum}</td>
+											<td width='20%'>${room.area}</td>
+											<td width='30%'>${room.description}</td>
 									</tr>
 								</c:forEach>
                             </tbody>

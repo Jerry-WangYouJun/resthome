@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.RoomMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="Room"  id="roomResultMap">
+        <id property="id" column="id"/>
+        <result property="roomcode" column="roomcode"/>
+        <result property="bednum" column="bednum"/>
+        <result property="area" column="area"/>
+         <result property="description" column="description"/>
+    </resultMap>
+    
+    <select id="findAllRoom" resultMap="roomResultMap" resultType="Room">
+        select * from t_room
+    </select>
+    
+    
+    <select id="queryRoomsByWhere" resultMap="roomResultMap" resultType="Room" parameterType="Room">
+        select * from t_room <include refid="where" />
+    </select>
+    
+    <sql id="where">
+    <where >
+     	  1=1 
+         <if test="id != null  and id !=''"> 
+    	      and id = #{id} 
+    	  </if>
+    	  <if test="roomcode != null  and roomcode !=''"> 
+    	      and roomcode like '%${roomcode}%' 
+    	  </if>
+    	  <if test="bednum != null  and bednum  > 0"> 
+    	      and bednum = #{bednum} 
+    	  </if>
+    	  <if test="area != null  and area !=''"> 
+    	      and area like '%${area}%'
+    	  </if>
+    </where>
+    </sql>
+    
+    <insert id="insertRoom" parameterType="Room">
+    	  insert into t_room ( 
+    	  <if test="bednum != null and  bednum  > 0 "> 
+    	  bednum , 
+    	  </if>
+    	  <if test="area != null  and area !=''"> 
+    	  area , 
+    	  </if>
+    	  roomcode 
+    	  ) values(
+    	 <if test="bednum != null  and bednum > 0 "> 
+    	    #{bednum} , 
+    	  </if>
+    	  <if test="area != null  and area !=''"> 
+    	    #{area} , 
+    	  </if>
+    	  #{roomcode}
+    	  )
+    </insert>
+    <update id="updateRoom" parameterType="Room">
+    	 update t_room set bednum = #{bednum} , roomcode = #{roomcode} , area = #{area} , 
+    	 description= #{description} where id = #{id}
+    </update>
+    
+    <delete id="deleteRoom" parameterType="Room">
+         delete from t_room where id=#{id}
+    </delete>
+</mapper>

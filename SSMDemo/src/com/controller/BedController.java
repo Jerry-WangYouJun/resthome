@@ -22,6 +22,7 @@ public class BedController {
     	ModelAndView mv = new ModelAndView("/bed/bed_list");
         List<Bed> bedList =  bedService.findBedByCondition(bed);
         mv.addObject("bedList", bedList);
+        mv.addObject("query", bed);
         return mv;
     }
     
@@ -37,7 +38,7 @@ public class BedController {
     	}else{
     		bedService.insertBed(bed);
     	}
-    	return findAllUser(bed);
+    	return findAllUser(new Bed());
     }
     
     @RequestMapping("/updateInit")
@@ -51,6 +52,6 @@ public class BedController {
     @RequestMapping("/delete")
     public ModelAndView deleteBed(Bed bed){
     	  bedService.deleteBed(bed);
-        return findAllUser(bed);
+        return findAllUser(new Bed());
     }
 }
