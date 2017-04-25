@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.MoveMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="Move"  id="moveResultMap">
+        <id property="id" column="id"/>
+        <result property="cname" column="cname"/>
+        <result property="oldroom" column="oldroom"/>
+        <result property="newroom" column="newroom"/>
+         <result property="description" column="description"/>
+    </resultMap>
+    
+    <select id="findAllMove" resultMap="moveResultMap" resultType="Move">
+        select * from t_move
+    </select>
+    
+    
+    <select id="queryMovesByWhere" resultMap="moveResultMap" resultType="Move" parameterType="Move">
+        select * from t_move <include refid="where" />
+    </select>
+    
+    <sql id="where">
+    <where >
+     	  1=1 
+         <if test="id != null  and id !=''"> 
+    	      and id = #{id} 
+    	  </if>
+    	  <if test="cname != null  and cname !=''"> 
+    	      and cname like '%${cname}%' 
+    	  </if>
+    	  <if test="oldroom != null  and oldroom !=''"> 
+    	      and oldroom like '%${oldroom}%'
+    	  </if>
+    	  <if test="newroom != null  and newroom !=''"> 
+    	      and newroom like '%${newroom}%'
+    	  </if>
+    </where>
+    </sql>
+    
+    <insert id="insertMove" parameterType="Move">
+    	  insert into t_move ( 
+    	  <if test="oldroom != null  and oldroom !=''"> 
+    	  oldroom , 
+    	  </if>
+    	  <if test="newroom != null  and newroom !=''"> 
+    	  newroom , 
+    	  </if>
+    	  cname 
+    	  ) values(
+    	 <if test="oldroom != null  and oldroom !=''"> 
+    	    #{oldroom} , 
+    	  </if>
+    	  <if test="newroom != null  and newroom !=''"> 
+    	    #{newroom} , 
+    	  </if>
+    	  #{cname}
+    	  )
+    </insert>
+    <update id="updateMove" parameterType="Move">
+    	 update t_move set cname = #{cname} , oldroom = #{oldroom} , newroom = #{newroom} , 
+    	 description= #{description} where id = #{id}
+    </update>
+    
+    <delete id="deleteMove" parameterType="Move">
+         delete from t_move where id=#{id}
+    </delete>
+</mapper>

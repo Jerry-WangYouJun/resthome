@@ -22,27 +22,27 @@
         });
 
         function query() {
-            $("#bedListForm").submit();
+            $("#moveListForm").submit();
         }
 
 
         function editInit(motion) {
             if (motion == "add") {
                 $("#myModalLabel").html("新增");
-                $("#iframeDialog").attr("src", "${basePath}/bed/addInit");
+                $("#iframeDialog").attr("src", "${basePath}/move/addInit");
             } else if (motion == "edit") {
                 $("#myModalLabel").html("修改人员");
-               // var selectedChks = $(".main-list-cont").find('input[type="checkbox"][id^="chkbedId"]:checked');
+               // var selectedChks = $(".main-list-cont").find('input[type="checkbox"][id^="chkmoveId"]:checked');
 	             var id = getChecked();
 	             if(id > 0){
-	                $("#iframeDialog").attr("src", "${basePath}/bed/updateInit?id=" + id);
+	                $("#iframeDialog").attr("src", "${basePath}/move/updateInit?id=" + id);
 	             }else{
 	            	 return false;
 	             }
             }else if(motion == "delete"){
             	var id = getChecked();
 	             if(id > 0){
-	            	 window.location.href= "${basePath}/bed/delete?id=" + id;
+	            	 window.location.href= "${basePath}/move/delete?id=" + id;
 	             }else{
 	            	 return false;
 	             }
@@ -57,10 +57,10 @@
 
         function doSubmit(motion) {
             if (motion.length > 0) {
-                path = "${basePath }/bed/edit";
-                var bedForm = window.frames["iframeDialog"].document.getElementById("bedForm");
-                bedForm.action = path;
-                bedForm.submit();
+                path = "${basePath }/move/edit";
+                var moveForm = window.frames["iframeDialog"].document.getElementById("moveForm");
+                moveForm.action = path;
+                moveForm.submit();
             }
         }
         
@@ -88,9 +88,9 @@
         }
         
         function clearData(){
-        	$("#code").val("");
-        	$("#room").val("");
-        	$("#area").val("");
+        	$("#cname").val("");
+        	$("#oldnewroom").val("");
+        	$("#newroom").val("");
         }
     </script>
 </head>
@@ -98,14 +98,14 @@
 <!-- 中间开始 -->
 
 <div class="main">
-    <form action="${basePath}/bed/query" method="POST" id="bedListForm">
-        <input type="hidden" id="hidEditMotion"  />
+    <form action="${basePath}/move/query" method="POST" id="moveListForm">
+       <input type="hidden" id="hidEditMotion"  />
         <div class="main-right">
             <div class="content">
             	<p class="content-top">
-						<span>床位</span><input type="text" id = "code"  name="code" value= "${query.code}"/>
-						<span>房间</span><input type="text" id = "room"  name="room" value= "${query.room}"/>
-						<span>院区</span><input type="text" id = "area"  name="area" value= "${query.area}"/>
+						<span>床位</span><input type="text" id = "cname"  name="cname" value= "${query.cname}"/>
+						<span>房间</span><input type="text" id = "oldroom"  name="oldroom" value= "${query.oldroom}"/>
+						<span>院区</span><input type="text" id = "newroom"  name="newroom" value= "${query.newroom}"/>
 						   <input class="bta" type="button" value="查询" onclick="query()"/>
 						   <input class="btd" type="button" value="清除" onclick="clearData()"/>
 				</p>
@@ -132,18 +132,18 @@
                     <div class="main-list-cont">
                         <table width="915px" cellspacing="0" cellpadding="0">
                             <tbody>
-								<c:forEach items="${ bedList}" var = "bed">
+								<c:forEach items="${ moveList}" var = "move">
 									<tr>
-									 <c:set var="bedId" value = "${bed.id }" />
+									 <c:set var="moveId" value = "${move.id }" />
 											<td width='5%'>
-												<input type='checkbox' id='chkbed${bedId}' name='chkbedId' value='${bed.id}'  />
+												<input type='checkbox' id='chkmove${moveId}' name='chkmoveId' value='${move.id}'  />
 											</td>
 											<td width='25%'>
-												${bed.code}
+												${move.cname}
 											</td>
-											<td width='20%'>${bed.room}</td>
-											<td width='20%'>${bed.area}</td>
-											<td width='30%'>${bed.description}</td>
+											<td width='20%'>${move.oldroom}</td>
+											<td width='20%'>${move.newroom}</td>
+											<td width='30%'>${move.description}</td>
 									</tr>
 								</c:forEach>
                             </tbody>
