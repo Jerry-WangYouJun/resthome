@@ -8,6 +8,8 @@
         <typeAlias alias="Bed" type="com.model.Bed"/>
         <typeAlias alias="Room" type="com.model.Room"/>
         <typeAlias alias="Move" type="com.model.Move"/>
+        <typeAlias alias="Leave" type="com.model.Leave"/>
+        <typeAlias alias="Visit" type="com.model.Visit"/>
     </typeAliases>
     <mappers>
         <mapper resource="com/mapper/userMapper.xml" />
@@ -15,5 +17,7 @@
          <mapper resource="com/mapper/bedMapper.xml" />
          <mapper resource="com/mapper/roomMapper.xml" />
          <mapper resource="com/mapper/moveMapper.xml" />
+         <mapper resource="com/mapper/leaveMapper.xml" />
+         <mapper resource="com/mapper/visitMapper.xml" />
     </mappers>
 </configuration>

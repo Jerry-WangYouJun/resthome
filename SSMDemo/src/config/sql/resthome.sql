@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50130
 File Encoding         : 65001
 
-Date: 2017-04-26 07:07:14
+Date: 2017-04-27 06:59:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -81,6 +81,24 @@ CREATE TABLE `t_customer` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `t_leave`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_leave`;
+CREATE TABLE `t_leave` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(20) DEFAULT NULL,
+  `leavedate` varchar(20) DEFAULT NULL,
+  `carrypeople` varchar(50) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_leave
+-- ----------------------------
+INSERT INTO `t_leave` VALUES ('2', '1', '1', '1', null);
+
+-- ----------------------------
 -- Table structure for `t_move`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_move`;
@@ -97,6 +115,24 @@ CREATE TABLE `t_move` (
 -- Records of t_move
 -- ----------------------------
 INSERT INTO `t_move` VALUES ('1', '1', null, '1', null);
+
+-- ----------------------------
+-- Table structure for `t_payment`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_payment`;
+CREATE TABLE `t_payment` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(20) DEFAULT NULL,
+  `money` double(10,2) DEFAULT NULL,
+  `time` varchar(20) DEFAULT NULL,
+  `type` varchar(2) DEFAULT NULL,
+  `description` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_payment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `t_room`
@@ -120,3 +156,22 @@ INSERT INTO `t_room` VALUES ('5', '123', '123', '123', null);
 INSERT INTO `t_room` VALUES ('6', '111', '1111', '111', null);
 INSERT INTO `t_room` VALUES ('7', '123', '123123', '123', null);
 INSERT INTO `t_room` VALUES ('8', '11', '11', '11', null);
+
+-- ----------------------------
+-- Table structure for `t_visit`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_visit`;
+CREATE TABLE `t_visit` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(20) DEFAULT NULL,
+  `visit` varchar(20) DEFAULT NULL,
+  `startdate` varchar(20) DEFAULT NULL,
+  `enddate` varchar(20) DEFAULT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_visit
+-- ----------------------------
+INSERT INTO `t_visit` VALUES ('2', '111', '1111', null, null, null);

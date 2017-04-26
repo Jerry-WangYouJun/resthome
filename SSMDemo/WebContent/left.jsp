@@ -40,10 +40,10 @@
             <div class="menu_list_main">
                 <ul class="menu_list_in">
                     <li id="u17">
-                        <p></p><span><a href="${basePath}/UserServlet" target="mainFrame">用户管理</a></span>
+                        <p></p><span><a href="${basePath}/leave/query" target="mainFrame">离院管理</a></span>
                     </li>
                     <li data-label="Events" id="u19">
-                        <p></p><span><a href="${basePath}/DeviceServlet" target="mainFrame">设备管理</a></span>
+                        <p></p><span><a href="${basePath}/visit/query" target="mainFrame">来访记录</a></span>
                     </li>
                     <li data-label="Events" id="u21">
                         <p></p><span><a href="${basePath}/CustomerServlet" target="mainFrame">客户管理</a></span>
