@@ -21,4 +21,23 @@ public class CustomerServiceImpl implements CustomerService{
         List<Customer> findAllUser = customerMapper.findAllCustomer();
         return findAllUser;
     }
+	@Override
+	public int insertCustomer(Customer customer) {
+		
+		return customerMapper.insertCustomer(customer);
+	}
+	@Override
+	public List<Customer> findCustomerByCondition(Customer customer) {
+		return customerMapper.findCustomerByWhere(customer);
+	}
+	@Override
+	public int updateCustomer(Customer customer) {
+		return customerMapper.updateCustomer(customer);
+		
+	}
+	@Override
+	public int deleteCustomer(Customer customer) {
+		return customerMapper.deleteCustomer(customer);
+		
+	}
 }

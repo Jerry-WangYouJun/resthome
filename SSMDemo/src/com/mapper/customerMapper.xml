@@ -16,12 +16,89 @@
         <result property="indate" column="indate"/>
         <result property="outdate" column="outdate"/>
         <result property="relation" column="relation"/>
-        <result property="rphone" column="r_phone"/>
-        <result property="rname" column="r_name"/>
-        <result property="raddress" column="r_address"/>
+        <result property="rphone" column="rphone"/>
+        <result property="rname" column="rname"/>
+        <result property="raddress" column="raddress"/>
     </resultMap>
     
     <select id="findAllCustomer" resultMap="resultMap" resultType="Customer">
         select * from t_customer
     </select>
+    
+     <select id="findCustomerByWhere" resultMap="resultMap" resultType="Customer" parameterType="Customer">
+        select * from t_customer <include refid="where" />
+    </select>
+    
+    <sql id="where">
+    <where >
+     	  1=1 
+         <if test="id != null  and id !=''"> 
+    	      and id = #{id} 
+    	  </if>
+    	  <if test="cname != null  and cname !=''"> 
+    	      and cname like '%${cname}%' 
+    	  </if>
+    	  <if test="idcard != null  and idcard !=''"> 
+    	      and idcard like '%${idcard}%'
+    	  </if>
+    	  <if test="nurse != null  and nurse !=''"> 
+    	      and nurse like '%${nurse}%'
+    	  </if>
+    </where>
+    </sql>
+    
+    <insert id="insertCustomer" parameterType="Customer" >
+    	insert into t_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" > ID, </if>
+      <if test="bedId != null" > bedId, </if>
+      <if test="cname != null" > cname, </if>
+      <if test="sex != null" > sex,</if>
+      <if test="birthday != null and birthday !='' " > birthday, </if>
+      <if test="level != null" >level, </if>
+      <if test="idcard != null" >  idcard,</if>
+      <if test="address != null" >  address, </if>
+      <if test="nurse != null" > nurse, </if>
+      <if test="indate != null and indate !=''" >  indate,</if>
+      <if test="outdate != null and outdate !=''" >outdate, </if>
+      <if test="relation != null" >relation, </if>
+      <if test="rphone != null" > rphone,</if>
+      <if test="rname != null" > rname,</if>
+      <if test="raddress != null" > raddress,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" > #{id,jdbcType=INTEGER}, </if>
+      <if test="bedId != null" > #{bedId,jdbcType=INTEGER}, </if>
+      <if test="cname != null" > #{cname,jdbcType=VARCHAR}, </if>
+      <if test="sex != null" > #{sex,jdbcType=VARCHAR}, </if>
+      <if test="birthday != null and birthday !='' " > #{birthday,jdbcType=VARCHAR}, </if>
+      <if test="level != null" > #{level,jdbcType=VARCHAR}, </if>
+      <if test="idcard != null" > #{idcard,jdbcType=VARCHAR},</if>
+      <if test="address != null" > #{address,jdbcType=VARCHAR},</if>
+       <if test="nurse != null" > #{nurse,jdbcType=VARCHAR},
+      </if>
+      <if test="indate != null " >  #{indate,jdbcType=VARCHAR},
+      </if>
+      <if test="outdate != null " > #{outdate,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null" > #{relation,jdbcType=VARCHAR},</if>
+      <if test="rphone != null" > #{rphone,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >  #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="raddress != null" > #{raddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateCustomer" parameterType="Customer">
+    	 update t_customer set bedId = #{bedId} , cname = #{cname},sex = #{sex},birthday = #{birthday},level = #{level} ,
+    	  idcard = #{idcard} , address = #{address},nurse = #{nurse},indate = #{indate},outdate = #{outdate} ,
+    	  relation = #{relation},rphone = #{rphone},rname = #{rname},raddress = #{raddress} where id = #{id}
+  </update>
+  
+  
+  <delete id="deleteCustomer" parameterType="Customer">
+         delete from t_customer where id=#{id}
+  </delete>
 </mapper>

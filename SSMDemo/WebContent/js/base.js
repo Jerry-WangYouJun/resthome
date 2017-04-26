@@ -21,3 +21,22 @@
 		 }
 		return true;
 	}
+	
+	 function getChecked(){
+ 		var id;
+ 		var checkTotal = 0;
+ 		$("input[type=checkbox]").each(function() {
+ 			if (this.checked) {
+ 				id = $(this).val();
+ 				checkTotal++;
+ 			}
+ 		});
+ 		if (checkTotal == 0) {
+ 			alert("请选中一条数据！");
+ 			return 0;
+ 		} else if (checkTotal > 1) {
+ 			alert("只能选择一条数据！");
+ 			return 0;
+ 		}
+ 		return id ;
+ 	}

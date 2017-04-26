@@ -10,7 +10,7 @@
     <link href="${basePath}/css/styles.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="${basePath}/js/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="${basePath}/js/bootstrap.min.js"></script>
-
+	<script type="text/javascript" src="${basePath}/js/base.js"></script>
     <style type="text/css">
         /*html{*/
         /*display:block;*/
@@ -64,24 +64,6 @@
             }
         }
         
-        function getChecked(){
-    		var id;
-    		var checkTotal = 0;
-    		$("input[type=checkbox]").each(function() {
-    			if (this.checked) {
-    				id = $(this).val();
-    				checkTotal++;
-    			}
-    		});
-    		if (checkTotal == 0) {
-    			alert("请选中一条数据！");
-    			return 0;
-    		} else if (checkTotal > 1) {
-    			alert("只能选择一条数据！");
-    			return 0;
-    		}
-    		return id ;
-    	}
         //关闭Modal框
         function closeModal() {
             $("#myModal").modal('hide');

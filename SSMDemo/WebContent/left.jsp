@@ -24,7 +24,7 @@
             <p></p><span>主页</span>
         </li>
         <li data-label="Publ" id="order">
-            <p></p><span><a href="${basePath}/customer/findAllCustomer" target="mainFrame">用户</a></span>
+            <p></p><span><a href="${basePath}/customer/query" target="mainFrame">用户</a></span>
         </li>
         <li data-label="Publ" id="prodPlan">
             <p></p><span><a href="${basePath}/bed/query" target="mainFrame">床位管理</a></span>

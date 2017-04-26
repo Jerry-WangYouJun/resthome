@@ -1,4 +1,3 @@
-<%@ page import="com.hyg.im.beans.User" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.util.Date" %>
@@ -45,7 +44,7 @@
 				$("#loginName").change(function(){
 					checkRepeat(this);
 				});
-				$("#userCode").change(function(){
+				$("#customerCode").change(function(){
 					checkRepeat(this);
 				});
     	});
@@ -56,7 +55,7 @@
     		if(value != ""){
 	    		 $.ajax({
 					type : "POST",
-					url : "${basePath}/UserServlet?action=checkRepeat&column=" + column + "&value=" + value,
+					url : "${basePath}/customerServlet?action=checkRepeat&column=" + column + "&value=" + value,
 					datatype:"json",
 					success : function(data) {
 						var  m = eval( "(" + data + ")");
@@ -67,7 +66,7 @@
 									$("#loginName").val("");
 								}else{
 									alert("用户编号重复！");
-									$("#userCode").val("");
+									$("#customerCode").val("");
 								}
 							}
 					}
@@ -82,12 +81,12 @@
             $("#nation").val("");
             $("#postion").val("");
             $("#deptName").val("");
-            $("#userCode").val("");
+            $("#customerCode").val("");
             $("#birthday").val("");
             $("#married").val("");
             $("#job").val("");
             $("#mobile").val("");
-            $("#userName").val("");
+            $("#customerName").val("");
             $("#idNum").val("");
             $("#hireDate").val("");
             $("#email").val("");
@@ -95,12 +94,6 @@
         }
      	
     	function doSubmit(){
-    		if(checkNull("loginName","用户名")){
-	   			 return;	
-	   		}
-    		if(checkNull("userCode","用户编号")){
-	   			 return;	
-	   		}
     		parent.doSubmit($('#hidEditMotion',parent.document).val());
     	}
     
@@ -108,160 +101,66 @@
 </head>
 
 <body>
-<%
-    User user = null;
-    user = request.getAttribute("user") != null ? (User) request.getAttribute("user") : null;
-
-%>
-<%
-
-
-    //    try {
-//        out.println(user != null ? sDateFormat.format(user.getBirthday()) : "1900-01-01");
-//    } catch (ParseException e) {
-//        e.printStackTrace();
-//    }
-%>
 
 <script type="text/javascript">
-$(function(){
-				var	 marriedFlag = "<%=user!=null?user.getMarried():"1"%>";
-				if(marriedFlag == 2 ){
-					$("#married2").attr("checked" , true);
-				}else{
-					$("#married1").attr("checked" , true);
-				}
-});
+
 </script>
 				
 
-<form id="userForm" action="" method="POST" target="_parent">
-    <input type="hidden" name="userId" value="<%=user!=null?user.getId():0%>"/>
+<form id="customerForm" action="" method="POST" target="_parent">
+    <input type="hidden" name="id" value="${customer.id}"/>
 	<div id="base" class="box clear box-news-pad">
-      <%-- <div class="box-header clear">
-        <ul class="add-p">
-          <li><span>用户名</span><input type="text" id="loginName" name="loginName"
-                       value="<%=user!=null?user.getLoginName():""%>"/></li>
-          <li class="box_warning" ><p style="color:red"> *必填 </p>
-          <li><span>性别</span><input type="text" id="sex" name="sex"
-                       value="<%=user!=null?user.getSex():""%>"/></li>
-          <li><span>民族</span><input type="text" id="nation" name="nation"
-                       value="<%=user!=null?user.getNation():""%>"/></li>
-          <li><span>岗位</span><input type="text" id="postion" name="postion"
-                       value="<%=user!=null?user.getPosition():""%>"/></li>
-          <li><span>所属部门</span><input type="text" id="deptName" name="deptName"
-                       value="<%=user!=null?user.getDeptName():""%>"/></li>
-        </ul>
-        <ul class="add-p">
-          <li><span>用户编号</span><input type="text" id="userCode" name="userCode"
-                          value='<%=user!=null?user.getUserCode():""%>'/>
-          </li>
-          <li class="box_warning" ><p style="color:red"> *必填 </p>
-          <li><span>生日</span><input type="date" id="birthday" name="birthday"
-                       value="<%=user!=null?user.getBirthday():"1900-01-01"%>"/></li>
-          <li><span style="float:left ">婚否</span> <input type="radio"  class="radio_cls"  name="married" id="married1" value="1" >
-          <span >是</span>
-          <input type="radio"  class="radio_cls" style = "margin-left:10px"name="married" id="married2" value="2"><span >否</span>
-                       </li>
-          <li><span>职务</span><input type="text" id="job" name="job"
-                       value="<%=user!=null?user.getJob():""%>"/>
-          </li>
-          <li><span>移动电话</span>
-          		<input type="text" id="mobile" name="mobile"
-                       value="<%=user!=null?user.getMobile():""%>"/>
-          </li>
-        </ul>
-        <ul class="add-p">
-          <li><span>姓名</span><input type="text" id="userName" name="userName"
-                       value="<%=user!=null?user.getUserName():""%>"/></li>
-          <li class="box_warning" ><p style="color:red"> </p></li>
-          <li><span>身份证号</span><input type="text" id="idNum" name="idNum"
-                       value="<%=user!=null?user.getIdNum():""%>"/></li>
-          <li><span>入职时间</span><input type="date" id="hireDate" name="hireDate"
-                       value="<%=user!=null?user.getHireDate():"1900-01-01"%>"/></li>
-          <li><span>电子邮箱</span><input type="text" id="email" name="email"
-                       value="<%=user!=null?user.getEmail():""%>"/>
-          </li>
-          <li><span></span>
-          		
-          </li>
-        </ul>
-         <ul class="add-a">
-          <li><span>备注</span>
-         	  <textarea class="longer"  id="description" name="description" 
-                          ><%=user != null ? user.getDescription() : ""%>
-              </textarea>
-          </li>
-        </ul>
-      </div> --%>
       <div class="box-header clear">
         <ul class="add-p">
-          <li><span>用户名</span><input type="text" id="loginName" name="loginName"
-                       value="${user.loginName}"/></li>
-          <li class="box_warning" ><p style="color:red"> *必填 </p>
-          <li><span>性别</span><input type="text" id="sex" name="sex"
-                       value="${user.sex }"/></li>
-          <li><span>民族</span><input type="text" id="nation" name="nation"
-                       value="${user.nation }"/></li>
-          <li><span>岗位</span><input type="text" id="postion" name="postion"
-                       value="${user.position }"/></li>
-          <li><span>所属部门</span><input type="text" id="deptName" name="deptName"
-                       value="${user.deptName }"/></li>
+          <li><span>姓名</span><input type="text" id="cname" name="cname"
+                       value="${customer.cname}"/></li>
+         <!--  <li class="box_warning" ><p style="color:red"> *必填 </p> -->
+          <li><span>出生日期</span><input type="date" id="birthday" name="birthday"
+                       value="${customer.birthday }"/></li>
+          <li><span>护理级别</span><input type="text" id="level" name="level"
+                       value="${customer.level }"/></li>
+          <li><span>户籍</span><input type="text" id="address" name="address"
+                       value="${customer.address }"/></li>
+          <li><span>入院时间</span><input type="date" id="indate" name="indate"
+                       value="${customer.indate }"/></li>
+          <li><span>亲属姓名</span><input type="text" id="rname" name="rname"
+                       value="${customer.rname }"/></li>
+          <li><span>亲属住址</span><input type="text" id="raddress" name="raddress"
+                       value="${customer.raddress }"/></li>
         </ul>
-        <ul class="add-p">
-          <li><span>用户编号</span><input type="text" id="userCode" name="userCode"
-                          value='${user.userCode }'/>
+        <ul class="add-p" >
+          <li><span>性别</span>
+		          <input type="radio"  class="radio_cls"  name="sex" id="sex1" value="1" ><span >女</span>
+          		  <input type="radio"  class="radio_cls" style = "margin-left:10px"name="sex" id="sex2" value="2"><span >男</span>
           </li>
-          <li class="box_warning" ><p style="color:red"> *必填 </p>
-          <li><span>生日</span><input type="date" id="birthday" name="birthday"
-                       value="${user.birthday }"/></li>
-          <li><span style="float:left ">婚否</span> <input type="radio"  class="radio_cls"  name="married" id="married1" value="1" >
-          <span >是</span>
-          <input type="radio"  class="radio_cls" style = "margin-left:10px"name="married" id="married2" value="2"><span >否</span>
-                       </li>
-          <li><span>职务</span><input type="text" id="job" name="job"
-                       value="${user.job }"/>
+          <!-- <li class="box_warning" ><p style="color:red"> *必填 </p> -->
+          <li><span>身份证号</span><input type="text" id="idcard" name="idcard"
+                       value="${customer.idcard }"/></li>
+          <li><span style="float:left ">责任护理员</span>
+         		 <input type="text" id="nurse" name="nurse"  value='${customer.nurse }'/> 
           </li>
-          <li><span>移动电话</span>
-          		<input type="text" id="mobile" name="mobile"
-                       value="${user.mobile }"/>
+          <li><span>床位</span><input type="text" id="bedId" name="bedId"
+                       value="${customer.bedId }"/>
           </li>
-        </ul>
-        <ul class="add-p">
-          <li><span>姓名</span><input type="text" id="userName" name="userName"
-                       value="${user.userName }"/></li>
-          <li class="box_warning" ><p style="color:red"> </p></li>
-          <li><span>身份证号</span><input type="text" id="idNum" name="idNum"
-                       value="${ user.idNum}"/></li>
-          <li><span>入职时间</span><input type="date" id="hireDate" name="hireDate"
-                       value="${user.hireDate }"/></li>
-          <li><span>电子邮箱</span><input type="text" id="email" name="email"
-                       value="${user.email }"/>
+          <li><span>出院日期</span>
+          		<input type="date" id="outdate" name="outdate"
+                       value="${customer.outdate }"/>
           </li>
-          <li><span></span>
-          		
+          <li><span>与老人关系</span><input type="text" id="relation" name="relation"
+                       value="${customer.relation }"/>
           </li>
-        </ul>
-         <ul class="add-a">
-          <li><span>备注</span>
-         	  <textarea class="longer"  id="description" name="description" 
-                          > 
-                          <c:choose>
-                          		<c:when test="${not empty user.description}">${user.desciption }</c:when>
-                          		<c:otherwise></c:otherwise>
-                          </c:choose>
-                         
-              </textarea>
+          <li><span>亲属电话</span><input type="text" id="rphone" name="rphone"
+                       value="${customer.rphone }"/>
           </li>
         </ul>
       </div>
       <div class="box-btn">
         <div class="box-btn-add">
-          <input class="btd" type="button" value="取消" onclick="parent.closeModal();"/>
-            <input class="bta" id="btnSubmit" type="button" value="保存" onclick="doSubmit();" />
         </div>
         <div class="box-btn-add-l">
           <input class="btc" type="button" value="重置" onclick="reset();"/>
+          <input class="btd" type="button" value="取消" onclick="parent.closeModal();"/>
+            <input class="bta" id="btnSubmit" type="button" value="保存" onclick="doSubmit();" />
         </div>
       </div>
     </div>

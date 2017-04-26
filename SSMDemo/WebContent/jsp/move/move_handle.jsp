@@ -113,8 +113,8 @@
         <ul class="add-p">
           <li><span>床位编号</span><input type="text" id="cname" name="cname"
                        value="${move.cname}"/></li>
-          <li><span>所在区域</span><input type="text" id="oldname" name="oldname"
-                       value="${move.oldname}"/></li>
+          <li><span>所在区域</span><input type="text" id="oldroom" name="oldroom"
+                       value="${move.oldroom}"/></li>
         </ul>
         <ul class="add-p">
           <li><span>房间号</span><input type="text" id="newroom" name="newroom"

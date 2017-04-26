@@ -11,7 +11,7 @@
     <link href="${basePath}/css/styles.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="${basePath}/js/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="${basePath}/js/bootstrap.min.js"></script>
-
+	<script type="text/javascript" src="${basePath}/js/base.js"></script>
     <style type="text/css">
         /*html{*/
         /*display:block;*/
@@ -22,52 +22,29 @@
             $(".main-list-cont tr:odd").css("background", "#e8f3ff");
         });
 
-        function query(pageNo) {
-            if (pageNo != undefined) {
-                $("#pageNo").val(pageNo);
-            }
+        function query() {
             $("#customerListForm").submit();
         }
 
-
-        function queryLast() {
-            var pageNo = $("#pageNo").val();
-            if (pageNo != undefined) {
-                $("#pageNo").val(pageNo);
-            }
-            if (parseInt(pageNo) > 1) {
-                query(parseInt(pageNo) - 1);
-            }
-        }
-
-        function queryNext() {
-            var pageNo = $("#pageNo").val();
-            if (pageNo != undefined) {
-                $("#pageNo").val(pageNo);
-            }
-            if (parseInt(pageNo) < parseInt("${pagination.pageIndex}")) {
-                query(parseInt(pageNo) + 1);
-            }
-        }
-
-
         function editInit(motion) {
             if (motion == "add") {
-                $("#myModalLabel").html("新增人员");
-                $("#iframeDialog").attr("src", "${basePath}/UserServlet?action=addOrEidtUserJsp&motion=" + motion);
+                $("#myModalLabel").html("新增老人信息");
+                $("#iframeDialog").attr("src", "${basePath}/customer/add");
             } else if (motion == "edit") {
-                $("#myModalLabel").html("修改人员");
-                var selectedChks = $(".main-list-cont").find('input[type="checkbox"][id^="chkUser"]:checked');
-                if (selectedChks.length == 0) {
-                    alert("请选中一个要修改的人员！");
-                    return false;
-                }
-                if (selectedChks.length > 1) {
-                    alert("只能选择一条数据！");
-                    return false;
-                }
-                $("#iframeDialog").attr("src", "${basePath}/UserServlet?action=addOrEidtUserJsp&motion=" + motion + "&userId=" + selectedChks.val());
-
+                $("#myModalLabel").html("修改老人信息");
+                var id = getChecked();
+	             if(id > 0){
+	            	 	$("#iframeDialog").attr("src", "${basePath}/customer/updateInit?id=" + id );
+		             }else{
+		            	 return false;
+		             }
+            }else if(motion == "delete"){
+            	var id = getChecked();
+	             if(id > 0){
+	            	 window.location.href= "${basePath}/customer/delete?id=" + id;
+	             }else{
+	            	 return false;
+	             }
             }
             else {
                 return false;
@@ -80,107 +57,45 @@
 
         }
 
-        /**
-         * 选择人员编辑时 检查其他选项 以确保只选中一条数据
-         * @param thisObj
-         */
-        function singleSelect(thisObj) {
-            var thisId = $(thisObj).attr("id");
-            $(".main-list-cont").find('input[type="checkbox"][id^="chkUser"]:checked').each(function () {
-                if ($(this).attr("id") != thisId) {
-                    $(this).prop("checked", false);
-                }
-            });
-        }
 
         function doSubmit(motion) {
             if (motion.length > 0) {
-                path = "${basePath}/UserServlet?action=" + motion + "&pageNo=" + $("#pageNo").val() + "&pageSize=" + $("#pageSize").val();
-                var userForm = window.frames["iframeDialog"].document.getElementById("userForm");
-                userForm.action = path;
-                userForm.submit();
+                path = "${basePath}/customer/edit";
+                var customerForm = window.frames["iframeDialog"].document.getElementById("customerForm");
+                customerForm.action = path;
+                customerForm.submit();
             }
         }
 	
-        //实用原始ajax的方式进行修改离职状态的操作
-        function dismission() {
-            var selectedChks = $(".main-list-cont").find('input[type="checkbox"][id^="chkUser"]:checked');
-            if (selectedChks.length == 0) {
-                alert("请选中一个要离职的人员！");
-                return false;
-            }
-            if (selectedChks.length > 1) {
-                alert("只能选择一条数据！");
-                return false;
-            }
-            if (confirm("确定要离职该人员吗?")) {
-               // window.location = "${basePath}/UserServlet?action=dismission&userId=" + selectedChks.val()  + "&pageNo=" + $("#pageNo").val() + "&pageSize=" + $("#pageSize").val();
-            	//定义ajax必须的xmlhttprequest对象
-               var xmlHttp;
-               if(window.ActiveXObject){ //判断是否为ie等不支持xmlhttprequest的浏览器，如果是就实用ActiveXObject对象
-       				 xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-	       		}else if(window.XMLHttpRequest){
-	       			 xmlHttp = new XMLHttpRequest(); 
-	       		}
-               //xmlhttprequest对象状态发生变化时的回调函数
-               xmlHttp.onreadystatechange = function(){
-            	   if(xmlHttp.readyState == 4  ){//判断响应完成的状态
-	               		if(xmlHttp.status == 200){//判断响应成功的状态
-	               			var flag = xmlHttp.responseText; //获取ajax返回的内容
-	               			if(flag > 0){
-	               				//console.info( $("#chkUser" + selectedChks.val()).parent().siblings()[4].innerHTML);
-	               				 $("#chkUser" + selectedChks.val()).parent().siblings()[4].innerHTML = "离职";
-	               			}else{
-	                   			alert("删除失败");
-	                   		}
-	               		}
-               		}
-               }
-               //实用get方式发送请求
-               xmlHttp.open("GET","${basePath}/UserServlet?action=dismission&userId=" + selectedChks.val());
-               //发送请求，如果是post 以 “action=dismission&userId=id” 这样的形式 添加字符串形式的请求参数  
-           	   xmlHttp.send(null);
-            }
-        }
 		
         //关闭Modal框
         function closeModal() {
             $("#myModal").modal('hide');
         }
 
-
     </script>
-
 
 </head>
 <body>
-<%--<div class="base">
-
-    <!-- 头部开始 -->
-
-    <div class="top">
-        <a class="logo" href="javascript:void(0)"> <img
-                src="images/index/logo_01.png"/>
-        </a> <span class="top-name">智能制造系统</span>
-    </div>
-
-    <div class="top-line"></div>
-
-</div>--%>
-
-<!-- 头部结束 -->
 
 <!-- 中间开始 -->
 
 <div class="main">
-    <form action="${basePath}/UserServlet" method="POST" id="customerListForm">
+    <form action="${basePath}/customer/query" method="POST" id="customerListForm">
         <input type="hidden" id="hidEditMotion"  />
         <div class="main-right">
             <div class="content">
+          		 <p class="content-top">
+						<span>姓名</span><input type="text" id = "cname"  name="cname" value= "${query.cname}"/>
+						<span>身份证号</span><input type="text" id = "idcard"  name="idcard" value= "${query.idcard}"/>
+						<span>护士</span><input type="text" id = "nurse"  name="nurse" value= "${query.nurse}"/>
+						   <input class="bta" type="button" value="查询" onclick="query()"/>
+						   <input class="btd" type="button" value="清除" onclick="reset();"/>
+				</p>
                 <div class="main-button">
                     <input class="bta" type="button" value="新增人员" onclick="editInit('add');"/>
                     <input class="btc" type="button" value="修改人员" onclick="editInit('edit');"/>
-                    <input class="btd" type="button" value="人员离职" onclick="dismission();"/>
+                    <input class="btd" type="button" value="人员离职" onclick="editInit('delete');"/>
                 </div>
 
                 <div class="main-list">
@@ -192,7 +107,7 @@
                                 <td width="150">老人姓名</td>
                                 <td width="150">床号</td>
                                 <td width="150">性别</td>
-                                <td width="150">年龄</td>
+                                <td width="150">出生年月</td>
                                 <td width="150">身份证号</td>
                                 <td width="135">照顾级别</td>
                                 <td width="135">亲属</td>
@@ -210,7 +125,7 @@
 									<tr>
 									 <c:set var="customerId" value = "${customer.id }" />
 											<td width='30px'>
-												<input type='checkbox' id='chkcustomer${customerId}' name='chkcustomerId' value='${customer.id}' onclick='singleSelect(this);' />
+												<input type='checkbox' id='chkcustomer${customerId}' name='chkcustomerId' value='${customer.id}'/>
 											</td>
 											<td width='150px'>
 												${customer.cname}
@@ -230,7 +145,6 @@
                         </table>
                     </div>
                 </div>
-                <jsp:include page="/pagination.jsp" flush="true"/>
             </div>
         </div>
 
