@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.PaymentMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="Payment"  id="paymentResultMap">
+        <id property="id" column="id"/>
+        <result property="cname" column="cname"/>
+        <result property="time" column="time"/>
+        <result property="type" column="type"/>
+        <result property="money" column="money"/>
+        <result property="description" column="description"/>
+    </resultMap>
+    
+    <select id="findAllPayment" resultMap="paymentResultMap" resultType="Payment">
+        select * from t_payment
+    </select>
+    
+    
+    <select id="queryPaymentsByWhere" resultMap="paymentResultMap" resultType="Payment" parameterType="Payment">
+        select * from t_payment <include refid="where" />
+    </select>
+    
+    <sql id="where">
+    <where >
+     	  1=1 
+         <if test="id != null  and id !=''"> 
+    	      and id = #{id} 
+    	  </if>
+    	  <if test="cname != null  and cname !=''"> 
+    	      and cname like '%${cname}%' 
+    	  </if>
+    	  <if test="time != null  and time !=''"> 
+    	      and time like '%${time}%'
+    	  </if>
+    	  <if test="type != null  and type !=''"> 
+    	      and type like '%${type}%'
+    	  </if>
+    </where>
+    </sql>
+    
+    <insert id="insertPayment" parameterType="Payment">
+    	  insert into t_payment ( 
+    	  <if test="time != null  and time !=''"> 
+    	  time , 
+    	  </if>
+    	  <if test="type != null  and type !=''"> 
+    	  type , 
+    	  </if>
+    	  <if test="money != null  and money > 0 "> 
+    	  money , 
+    	  </if>
+    	  cname 
+    	  ) values(
+    	 <if test="time != null  and time !=''"> 
+    	    #{time} , 
+    	  </if>
+    	  <if test="type != null  and type !=''"> 
+    	    #{type} , 
+    	  </if>
+    	   <if test="money != null  and money > 0"> 
+    	    #{money} , 
+    	  </if>
+    	  #{cname}
+    	  )
+    </insert>
+    <update id="updatePayment" parameterType="Payment">
+    	 update t_payment set cname = #{cname} , time = #{time} , type = #{type} , 
+    	 money = #{money} , description= #{description} where id = #{id}
+    </update>
+    
+    <delete id="deletePayment" parameterType="Payment">
+         delete from t_payment where id=#{id}
+    </delete>
+</mapper>

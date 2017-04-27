@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.BillMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="Bill"  id="billResultMap">
+        <id property="id" column="id"/>
+        <result property="cname" column="cname"/>
+        <result property="billno" column="billno"/>
+        <result property="paytype" column="paytype"/>
+        <result property="acounttype" column="acounttype"/>
+        <result property="restmoney" column="restmoney"/>
+        <result property="description" column="description"/>
+    </resultMap>
+    
+    <select id="findAllBill" resultMap="billResultMap" resultType="Bill">
+        select * from t_bill
+    </select>
+    
+    
+    <select id="queryBillsByWhere" resultMap="billResultMap" resultType="Bill" parameterType="Bill">
+        select * from t_bill <include refid="where" />
+    </select>
+    
+    <sql id="where">
+    <where >
+     	  1=1 
+         <if test="id != null  and id !=''"> 
+    	      and id = #{id} 
+    	  </if>
+    	  <if test="cname != null  and cname !=''"> 
+    	      and cname like '%${cname}%' 
+    	  </if>
+    	  <if test="billno != null  and billno !=''"> 
+    	      and billno like '%${billno}%'
+    	  </if>
+    	  <if test="paytype != null  and paytype !=''"> 
+    	      and paytype like '%${paytype}%'
+    	  </if>
+    </where>
+    </sql>
+    
+    <insert id="insertBill" parameterType="Bill">
+    	  insert into t_bill ( 
+    	  <if test="billno != null  and billno !=''"> 
+    	  billno , 
+    	  </if>
+    	  <if test="paytype != null  and paytype !=''"> 
+    	  paytype , 
+    	  </if>
+    	   <if test="acounttype != null  and acounttype !=''"> 
+    	    acounttype , 
+    	  </if>
+    	  <if test="restmoney != null  and restmoney >0 "> 
+    	    restmoney , 
+    	  </if>
+    	  cname 
+    	  ) values(
+    	 <if test="billno != null  and billno !=''"> 
+    	    #{billno} , 
+    	  </if>
+    	  <if test="paytype != null  and paytype !=''"> 
+    	    #{paytype} , 
+    	  </if>
+    	  <if test="acounttype != null  and acounttype !=''"> 
+    	    #{acounttype} , 
+    	  </if>
+    	  <if test="restmoney != null  and restmoney >0 "> 
+    	    #{restmoney} , 
+    	  </if>
+    	  #{cname}
+    	  )
+    </insert>
+    <update id="updateBill" parameterType="Bill">
+    	 update t_bill set cname = #{cname} , billno = #{billno} , paytype = #{paytype} , 
+    	 acounttype = #{acounttype} , restmoney = #{restmoney} ,
+    	 description= #{description} where id = #{id}
+    </update>
+    
+    <delete id="deleteBill" parameterType="Bill">
+         delete from t_bill where id=#{id}
+    </delete>
+</mapper>

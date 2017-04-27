@@ -3,7 +3,7 @@ package com.model;
 public class Payment {
 	 private Integer id ; 
 	 private String  cname ; 
-	 private double money ;
+	 private Double money ;
 	 private String  time ;
 	 private String type ;
 	 private String description;
@@ -19,10 +19,10 @@ public class Payment {
 	public void setCname(String cname) {
 		this.cname = cname;
 	}
-	public double getMoney() {
+	public Double getMoney() {
 		return money;
 	}
-	public void setMoney(double money) {
+	public void setMoney(Double money) {
 		this.money = money;
 	}
 	public String getTime() {

@@ -46,10 +46,10 @@
                         <p></p><span><a href="${basePath}/visit/query" target="mainFrame">来访记录</a></span>
                     </li>
                     <li data-label="Events" id="u21">
-                        <p></p><span><a href="${basePath}/CustomerServlet" target="mainFrame">客户管理</a></span>
+                        <p></p><span><a href="${basePath}/payment/query" target="mainFrame">缴费记录</a></span>
                     </li>
                     <li data-label="Events" id="product">
-                        <p></p><span><a href="${basePath}/ProductServlet" target="mainFrame">产品管理</a></span>
+                        <p></p><span><a href="${basePath}/bill/query" target="mainFrame">流水账单</a></span>
                     </li>
                     <li data-label="Events" id="process">
                         <p></p><span><a href="${basePath}/ProcessServlet?action=query" target="mainFrame">工序管理</a></span>
