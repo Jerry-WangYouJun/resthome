@@ -1,4 +1,4 @@
-	function checkNull(obj,vline){
+function checkNull(obj,vline){
 	    //判断输入框是否为空，为空时弹出提示框
 	     
 	 var v=document.getElementById(obj).value;

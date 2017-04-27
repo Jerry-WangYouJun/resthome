@@ -14,4 +14,6 @@ public interface CustomerService {
 	int updateCustomer(Customer customer);
 
 	int deleteCustomer(Customer customer);
+
+	List<Customer> queryRoomReport(Customer customer);
 }

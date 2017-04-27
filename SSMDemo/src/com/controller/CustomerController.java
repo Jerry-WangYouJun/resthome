@@ -25,6 +25,14 @@ public class CustomerController {
         return mv;
     }
     
+    @RequestMapping("/report")
+    public ModelAndView report(Customer customer){
+    	ModelAndView mv = new ModelAndView("/report/bedReport_list");
+        List<Customer> customerList =  service.queryRoomReport(customer);
+        mv.addObject("customerList", customerList);
+        return mv;
+    }
+    
     @RequestMapping("/add")
     public String addCustomer(){
     	return "/user/user_handle";

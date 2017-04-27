@@ -3,7 +3,7 @@ package com.model;
 public class Customer {
 	  
 	 Integer id ; 
-	 Integer bedId ; 
+	 String bedId ; 
 	 String cname ; 
 	 String sex ;
 	 String birthday ; 
@@ -17,16 +17,18 @@ public class Customer {
 	 String rphone;
 	 String rname;
 	 String raddress;
+	 private Room room ; 
+	 private Bed bed ;
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getBedId() {
+	public String getBedId() {
 		return bedId;
 	}
-	public void setBedId(Integer bedId) {
+	public void setBedId(String bedId) {
 		this.bedId = bedId;
 	}
 	public String getCname() {
@@ -107,5 +109,17 @@ public class Customer {
 	public void setRaddress(String raddress) {
 		this.raddress = raddress;
 	}
-	 
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+	public Bed getBed() {
+		return bed;
+	}
+	public void setBed(Bed bed) {
+		this.bed = bed;
+	}
+	
 }

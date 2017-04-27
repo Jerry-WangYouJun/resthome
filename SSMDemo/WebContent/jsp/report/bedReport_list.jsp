@@ -1,3 +1,4 @@
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@include file="/common/taglibs.jsp" %>
@@ -5,7 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>床位管理</title>
+    <title>产品管理</title>
     <link href="${basePath}/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
     <link href="${basePath}/css/styles.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="${basePath}/js/jquery/jquery-3.1.1.min.js"></script>
@@ -22,93 +23,78 @@
         });
 
         function query() {
-            $("#billListForm").submit();
+            $("#customerListForm").submit();
         }
-
 
         function editInit(motion) {
             if (motion == "add") {
-                $("#myModalLabel").html("新增");
-                $("#iframeDialog").attr("src", "${basePath}/bill/addInit");
+                $("#myModalLabel").html("新增老人信息");
+                $("#iframeDialog").attr("src", "${basePath}/customer/add");
             } else if (motion == "edit") {
-                $("#myModalLabel").html("修改人员");
-               // var selectedChks = $(".main-list-cont").find('input[type="checkbox"][id^="chkbillId"]:checked');
-	             var id = getChecked();
+                $("#myModalLabel").html("修改老人信息");
+                var id = getChecked();
 	             if(id > 0){
-	                $("#iframeDialog").attr("src", "${basePath}/bill/updateInit?id=" + id);
-	             }else{
-	            	 return false;
-	             }
+	            	 	$("#iframeDialog").attr("src", "${basePath}/customer/updateInit?id=" + id );
+		             }else{
+		            	 return false;
+		             }
             }else if(motion == "delete"){
             	var id = getChecked();
 	             if(id > 0){
-	            	 window.location.href= "${basePath}/bill/delete?id=" + id;
+	            	 window.location.href= "${basePath}/customer/delete?id=" + id;
 	             }else{
 	            	 return false;
 	             }
-            }else {
+            }
+            else {
                 return false;
             }
+
             //设置提交按钮的方向
             $("#hidEditMotion").val(motion);
             $("#myModal").modal({backdrop: "static"});
+
+
         }
 
 
         function doSubmit(motion) {
             if (motion.length > 0) {
-                path = "${basePath }/bill/edit";
-                var billForm = window.frames["iframeDialog"].document.getElementById("billForm");
-                billForm.action = path;
-                billForm.submit();
+                path = "${basePath}/customer/edit";
+                var customerForm = window.frames["iframeDialog"].document.getElementById("customerForm");
+                customerForm.action = path;
+                customerForm.submit();
             }
         }
-        
+	
+		
         //关闭Modal框
         function closeModal() {
             $("#myModal").modal('hide');
         }
-        
-        function clearData(){
-        	$("#cname").val("");
-        	$("#paytype").val("");
-        	$("#acounttype").val("");
-        }
+
     </script>
+
 </head>
 <body>
+
 <!-- 中间开始 -->
 
 <div class="main">
-    <form action="${basePath}/bill/query" method="POST" id="billListForm">
+    <form action="${basePath}/customer/query" method="POST" id="customerListForm">
         <input type="hidden" id="hidEditMotion"  />
         <div class="main-right">
             <div class="content">
-            	<p class="content-top">
-						<span>姓名</span><input type="text" id = "cname"  name="cname" value= "${query.cname}"/>
-						<span>费用流向</span><input type="text" id = "paytype"  name="paytype" value= "${query.paytype}"/>
-						<span>流水号</span><input type="text" id = "acounttype"  name="billno" value= "${query.billno}"/>
-						   <input class="bta" type="button" value="查询" onclick="query()"/>
-						   <input class="btd" type="button" value="清除" onclick="clearData()"/>
-				</p>
-                <div class="main-button">
-                    <input class="bta" type="button" value="新增" onclick="editInit('add');"/>
-                    <input class="btc" type="button" value="修改" onclick="editInit('edit');"/>
-                    <input class="btd" type="button" value="删除" onclick="editInit('delete');"/>
-                </div>
-
                 <div class="main-list">
                     <div class="main-list-top">
                         <table width="915px" cellspacing="0" cellpadding="0">
                             <thead>
                             <tr align="center">
-                                <td width="5%"></td>
-                                <td width="15%">姓名</td>
-                                <td width="20%">流水号</td>
-                                <td width="10%">余额</td>
-                                <td width="10%">费用流向</td>
-                                <td width="10%">费用类型</td>
-                                <td width="30%">备注</td>
+                                <td width="30px"></td>
+                                <td width="150">老人姓名</td>
+                                <td width="150">床号</td>
+                                <td width="150">房间号</td>
+                                <td width="150">院区</td>
                             </tr>
                             </thead>
                         </table>
@@ -116,20 +102,20 @@
                     <div class="main-list-cont">
                         <table width="915px" cellspacing="0" cellpadding="0">
                             <tbody>
-								<c:forEach items="${ billList}" var = "bill">
+								<c:forEach items="${ customerList}" var = "customer">
 									<tr>
-									 <c:set var="billId" value = "${bill.id }" />
-											<td width='5%'>
-												<input type='checkbox' id='chkbill${billId}' name='chkbillId' value='${bill.id}'  />
+									 <c:set var="customerId" value = "${customer.id }" />
+											<td width='30px'>
+												<input type='checkbox' id='chkcustomer${customerId}' name='chkcustomerId' value='${customer.id}'/>
 											</td>
-											<td width='15%'>
-												${bill.cname}
+											<td width='150px'>
+												${customer.cname}
 											</td>
-											<td width='20%'>${bill.billno}</td>
-											<td width='10%'>${bill.restmoney}</td>
-											<td width='10%'>${bill.paytype}</td>
-											<td width='10%'>${bill.acounttype}</td>
-											<td width='30%'>${bill.description}</td>
+											<td width='150px'>${customer.bedId}</td>
+											<td width='150px'>
+												${customer.bed.room}
+											</td>
+											<td width='150px'>${customer.bed.area}</td>
 									</tr>
 								</c:forEach>
                             </tbody>

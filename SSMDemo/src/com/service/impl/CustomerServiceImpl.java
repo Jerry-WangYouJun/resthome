@@ -40,4 +40,8 @@ public class CustomerServiceImpl implements CustomerService{
 		return customerMapper.deleteCustomer(customer);
 		
 	}
+	@Override
+	public List<Customer> queryRoomReport(Customer customer) {
+		return customerMapper.getReport(customer);
+	}
 }

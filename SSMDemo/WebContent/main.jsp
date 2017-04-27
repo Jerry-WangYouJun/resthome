@@ -14,7 +14,7 @@
     <frame src="header.jsp" scrolling="no"/>
     <frameset cols="15%,85%">
         <frame src="left.jsp" scrolling="no" name="leftFrame"/>
-        <frame src="images/index/blue_hand.png" name="mainFrame"/>
+        <frame src="images/index/blue_hand.jpg"  name="mainFrame"/>
     </frameset>
     <frame src="footer.jsp" scrolling="no"/>
 </frameset>

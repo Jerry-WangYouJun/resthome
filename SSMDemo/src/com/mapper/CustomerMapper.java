@@ -14,4 +14,6 @@ public interface CustomerMapper {
 	int updateCustomer(Customer customer);
 
 	int deleteCustomer(Customer customer);
+
+	List<Customer> getReport(Customer customer);
 }

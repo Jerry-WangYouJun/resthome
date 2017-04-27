@@ -19,11 +19,7 @@
 		<!-- 头部开始 -->
 
 		<div class="top">
-			<a class="logo" href="javascript:void(0)"> <img
-				src="images/index/logo_01.png" />
-			</a> <span class="top-name">智能制造系统</span>
-			<a  onclick="toLogin()" style="float:right;height:100px;width:100px;margin-top:25px;color:#fff;"> 注销
-			</a>
+			<span class="top-name" style="margin-left: 100px;font-size: 40px">金大地养老院管理信息系统</span>
 		</div>
 		<div class="top-line"></div>
 </div>

@@ -20,7 +20,39 @@
         <result property="rname" column="rname"/>
         <result property="raddress" column="raddress"/>
     </resultMap>
-    
+    <resultMap type="Customer"  id="resultMapBed">
+        <id property="id" column="id"/>
+        <result property="bedId" column="bedid"/>
+        <result property="cname" column="cname"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="level" column="level"/>
+        <result property="idcard" column="idcard"/>
+        <result property="address" column="address"/>
+        <result property="nurse" column="nurse"/>
+        <result property="indate" column="indate"/>
+        <result property="outdate" column="outdate"/>
+        <result property="relation" column="relation"/>
+        <result property="rphone" column="rphone"/>
+        <result property="rname" column="rname"/>
+        <result property="raddress" column="raddress"/>
+        <association property="bed" javaType="Bed">
+            <id property="id" column="id"/>
+	        <result property="code" column="code"/>
+	        <result property="room" column="room"/>
+	        <result property="area" column="area"/>
+	        <result property="description" column="description"/>
+        </association>
+    </resultMap>
+    <!-- 
+   	 方式一：嵌套结果：使用嵌套结果映射来处理重复的联合结果的子集
+             封装联表查询的数据(去除重复的数据)
+        select * from class c, teacher t where c.teacher_id=t.t_id and c.c_id=1
+    -->
+    <select id="getReport" parameterType="Customer" resultMap="resultMapBed">
+        select * from t_customer c, t_bed b where c.bedid =  b.code  
+    </select>
+   
     <select id="findAllCustomer" resultMap="resultMap" resultType="Customer">
         select * from t_customer
     </select>
@@ -68,7 +100,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" > #{id,jdbcType=INTEGER}, </if>
-      <if test="bedId != null" > #{bedId,jdbcType=INTEGER}, </if>
+      <if test="bedId != null" > #{bedId,jdbcType=VARCHAR}, </if>
       <if test="cname != null" > #{cname,jdbcType=VARCHAR}, </if>
       <if test="sex != null" > #{sex,jdbcType=VARCHAR}, </if>
       <if test="birthday != null and birthday !='' " > #{birthday,jdbcType=VARCHAR}, </if>
@@ -101,4 +133,6 @@
   <delete id="deleteCustomer" parameterType="Customer">
          delete from t_customer where id=#{id}
   </delete>
+  
+  
 </mapper>
